@@ -15,6 +15,13 @@ body {
   background: #222;
   font-family: sans-serif;
   line-height: 1.35;
+  font-size: 18px;
+}
+
+@media (max-width: 768px) {
+  body {
+    font-size: 16px;
+  }
 }
 
 /* Основной контейнер и переменные */
@@ -130,6 +137,25 @@ body {
   user-select: none;
 }
 
+@media (max-width: 768px) {
+  .hero .hero__swiper {
+    width: 100%;
+    bottom: 20px;
+  }
+  
+  .content--slide .content__title {
+    display: none;
+  }
+  
+  .content--slide .content__desc {
+    display: none;
+  }
+  
+  .swiper-button-next {
+    display: none;
+  }
+}
+
 .swiper {
   --swiper-navigation-size: 20px;
   visibility: hidden;
@@ -169,15 +195,45 @@ body {
   color: #fff;
 }
 
+/* Скрываем текст на всех слайдах в карусели */
+.swiper-slide .content__text {
+  display: none;
+}
+
+/* Показываем текст только на активном слайде в полноэкранном режиме */
+.hero__content:not(.hero__content--hidden) .content__text {
+  display: flex;
+}
+
+/* Стили для элемента с номером дня */
+.day-number {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: rgba(0, 0, 0, 0.3);
+  color: rgb(235, 235, 235);
+  padding: 5px 10px;
+  border-radius: 8px;
+  font-weight: bold;
+  z-index: 2;
+}
+
+/* Скрываем номер дня на активном полноэкранном слайде */
+.hero__content:not(.hero__content--hidden) .day-number {
+  display: none;
+}
+
 .content__desc {
   margin: 0;
 }
 
 .content--slide .content__title {
-  font-size: 12px;
   margin: auto 0 0;
   padding: 0.35em 0.75em;
   background-color: #0007;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .content--slide .content__desc {
@@ -191,7 +247,11 @@ body {
   position: absolute;
   border-radius: 0;
 }
-
+@media (max-width: 768px) {
+  .content--hero {
+    padding: 50px 30px 0;
+  } 
+}
 .content--hero::before {
   content: '';
   position: absolute;
@@ -205,12 +265,17 @@ body {
 }
 
 .content--hero .content__title {
-  font-size: 42px;
   margin: 0 0 0.2em;
 }
 
 .content--hero .content__text {
-  width: 45%;
+  width: 60%;
+}
+
+@media (max-width: 768px) {
+  .content--hero .content__text {
+    width: 100%;
+  } 
 }
 
 .content__image {

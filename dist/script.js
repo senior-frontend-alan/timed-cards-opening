@@ -128,12 +128,15 @@ const swiper = new Swiper(".swiper", {
   slidesPerView: 3.5,  // Количество видимых слайдов
   spaceBetween: 25,    // Расстояние между слайдами
   loop: true,          // Циклический режим
-  speed: 1000,         // Скорость анимации
-  simulateTouch: false, // Отключение сенсорного управления
+  speed: 2000,         // Скорость анимации
+  simulateTouch: true, // Включение сенсорного управления
+  grabCursor: true,    // Курсор захвата при наведении
+  slideToClickedSlide: true,  // Переход к слайду при клике
 
   // Автоматическая прокрутка
   autoplay: {
-    delay: 1000 // Задержка между слайдами в мс
+    delay: 3000, // Увеличенная задержка между слайдами в мс
+    disableOnInteraction: false // Продолжать автопрокрутку после взаимодействия пользователя
   },
 
   // Навигация
@@ -148,3 +151,5 @@ const swiper = new Swiper(".swiper", {
     init: swiperInit            // При инициализации
   }
 });
+
+// Примечание: используем встроенный параметр slideToClickedSlide для обработки кликов

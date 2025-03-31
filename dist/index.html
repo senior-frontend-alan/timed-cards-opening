@@ -6,16 +6,20 @@
   <title>7 дней в Ялте - Незабываемый тур</title>
   <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css'>
   <link rel="stylesheet" href="./fonts.css">
-  <link rel="stylesheet" href="./style.css">
   <!-- Подключаем дополнительные стили -->
+  <link rel="stylesheet" href="./main.css">
+  <link rel="stylesheet" href="./hero-slider.css">
   <link rel="stylesheet" href="./day-details.css">
   <link rel="stylesheet" href="./included-section.css">
+  <link rel="stylesheet" href="./accommodation.css">
+  <link rel="stylesheet" href="./rooms.css">
+  <link rel="stylesheet" href="./map.css">
 </head>
 <body>
 <!-- partial:index.partial.html -->
 <div class="hero">
   <div class="hero__fullsize"></div>
-  <div class="hero__swiper swiper">
+  <div class="hero__swiper swiper hero-swiper">
     <div class="swiper-wrapper">
 
       <div class="swiper-slide">
@@ -385,6 +389,143 @@
   <div class="journey-line"></div>
 </div>
 
+<!-- Блок "Проживание" -->
+<div class="accommodation-section">
+  <h2 class="accommodation-title">Проживание</h2>
+  <p class="accommodation-description">Дизайн-вилла MaSSandra <br>
+    Республика Крым, городской округ Ялта, посёлок городского типа Массандра, улица Мира, 21Г</p>
+  
+  <div class="accommodation-slider">
+    <!-- Кнопки навигации -->
+    <div class="accommodation-navigation">
+      <div class="accommodation-button-prev">❮</div>
+      <div class="accommodation-button-next">❯</div>
+    </div>
+    <!-- Добавляем пагинацию -->
+    <div class="accommodation-pagination"></div>
+    
+    <!-- слайдер картинок дома Swiper -->
+    <div class="swiper accommodation-swiper">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <div class="accommodation-slide">
+            <img src="images/дом/Дом1.webp" alt="Гостевой дом MaSSandra - фото 1">
+          </div>
+        </div>
+        <div class="swiper-slide">
+          <div class="accommodation-slide">
+            <img src="images/дом/Дом2.webp" alt="Гостевой дом MaSSandra - фото 2">
+          </div>
+        </div>
+        <div class="swiper-slide">
+          <div class="accommodation-slide">
+            <img src="images/дом/Дом3.webp" alt="Гостевой дом MaSSandra - фото 3">
+          </div>
+        </div>
+        <div class="swiper-slide">
+          <div class="accommodation-slide">
+            <img src="images/дом/Дом4.webp" alt="Гостевой дом MaSSandra - фото 4">
+          </div>
+        </div>
+        <div class="swiper-slide">
+          <div class="accommodation-slide">
+            <img src="images/дом/Дом5.webp" alt="Гостевой дом MaSSandra - фото 5">
+          </div>
+        </div>
+        <div class="swiper-slide">
+          <div class="accommodation-slide">
+            <img src="images/дом/Дом6.webp" alt="Гостевой дом MaSSandra - фото 6">
+          </div>
+        </div>
+        <div class="swiper-slide">
+          <div class="accommodation-slide">
+            <img src="images/дом/Дом7.webp" alt="Гостевой дом MaSSandra - фото 7">
+          </div>
+        </div>
+        <div class="swiper-slide">
+          <div class="accommodation-slide">
+            <img src="images/дом/Дом8.webp" alt="Гостевой дом MaSSandra - фото 8">
+          </div>
+        </div>
+        <div class="swiper-slide">
+          <div class="accommodation-slide">
+            <img src="images/дом/Дом10.webp" alt="Гостевой дом MaSSandra - фото 10">
+          </div>
+        </div>
+        <div class="swiper-slide">
+          <div class="accommodation-slide">
+            <img src="images/дом/Дом11.webp" alt="Гостевой дом MaSSandra - фото 11">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="room-types-info">
+    <h3 class="room-types-title">Типы номеров:</h3>
+    <div class="room-types-container">
+      <div class="room-type">
+        <div class="room-type-icon">1</div>
+        <div class="room-type-desc">Одноместные номера</div>
+      </div>
+      <div class="room-type">
+        <div class="room-type-icon">2</div>
+        <div class="room-type-desc">Двухместные номера</div>
+      </div>
+      <div class="room-type">
+        <div class="room-type-icon">3</div>
+        <div class="room-type-desc">Трехместные номера</div>
+      </div>
+    </div>
+  </div>
+  
+
+  <div class="rooms-grid">
+    <div class="room-card">
+      <img src="images/номера/номер1.webp" alt="Номер 1" class="room-image">
+    </div>
+    <div class="room-card">
+      <img src="images/номера/номер2.webp" alt="Номер 2" class="room-image">
+    </div>
+    <div class="room-card">
+      <img src="images/номера/номер3.webp" alt="Номер 3" class="room-image">
+    </div>
+    <div class="room-card">
+      <img src="images/номера/номер4.webp" alt="Номер 4" class="room-image">
+    </div>
+    <div class="room-card">
+      <img src="images/номера/номер5.webp" alt="Номер 5" class="room-image">
+    </div>
+    <div class="room-card">
+      <img src="images/номера/номер6.webp" alt="Номер 6" class="room-image">
+    </div>
+    <div class="room-card">
+      <img src="images/номера/номер7.webp" alt="Номер 7" class="room-image">
+    </div>
+    <div class="room-card">
+      <img src="images/номера/номер8.webp" alt="Номер 8" class="room-image">
+    </div>
+  </div>
+
+  <!-- Блок с Яндекс-картой -->
+  <div class="map-section">
+    <p class="map-address">Республика Крым, городской округ Ялта, посёлок городского типа Массандра, улица Мира, 21Г</p>
+    <div id="map" class="yandex-map"></div>
+  </div>
+
+</div>
+
+<!-- Модальное окно для просмотра увеличенных изображений -->
+<div class="accommodation-modal">
+  <span class="accommodation-modal-close">&times;</span>
+  <div class="accommodation-modal-content">
+    <div class="modal-prev-btn">❮</div>
+    <img class="accommodation-modal-image" src="" alt="Увеличенное изображение">
+    <div class="modal-next-btn">❯</div>
+  </div>
+  <div class="modal-counter">1 / 10</div>
+</div>
+
 <!-- Блок "Включено в стоимость" -->
 <div class="included-section">
   <h2 class="section-title">Что включено в стоимость?</h2>
@@ -411,5 +552,35 @@
 
 <!-- Добавляем скрипт для основного слайдера -->
 <script type="module" src="./script.js"></script>
+
+<!-- Добавляем скрипт Яндекс.Карт -->
+<script src="https://api-maps.yandex.ru/2.1/?apikey=ваш_API_ключ&lang=ru_RU" type="text/javascript"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    ymaps.ready(init);
+    
+    function init() {
+      var myMap = new ymaps.Map('map', {
+        center: [44.518332, 34.187222], // Координаты Массандры
+        zoom: 15,
+        controls: ['zoomControl', 'fullscreenControl']
+      });
+      
+      // Создаем метку с адресом
+      var myPlacemark = new ymaps.Placemark([44.518332, 34.187222], {
+        hintContent: 'Гостевой дом "MaSSandra"',
+        balloonContent: 'Республика Крым, городской округ Ялта, посёлок городского типа Массандра, улица Мира, 21Г'
+      }, {
+        preset: 'islands#redDotIcon'
+      });
+      
+      // Добавляем метку на карту
+      myMap.geoObjects.add(myPlacemark);
+      
+      // Отключаем прокрутку карты колесиком мыши
+      myMap.behaviors.disable('scrollZoom');
+    }
+  });
+</script>
 </body>
 </html>

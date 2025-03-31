@@ -1,33 +1,12 @@
-/* Базовые стили */
-* {
-  box-sizing: border-box;
-}
+/* 
+ * Стили для основного слайдера (hero)
+ * Выделены в отдельный файл для изоляции от других компонентов
+ */
 
-html,
-body {
-  position: relative;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  background: #f9f9f9;
-  background: #eef2fa;
-  font-family: sans-serif;
-  line-height: 1.35;
-  font-size: 18px;
-}
-
-@media (max-width: 768px) {
-  body {
-    font-size: 16px;
-  }
-}
 
 /* Основной контейнер и переменные */
 .hero {
-  --border-radius: 12px;
+  /* --border-radius: 12px; */
   --transition-duration: 1000ms;
   position: relative;
   width: 100%;
@@ -105,7 +84,6 @@ body {
 }
 
 /* desc */
-
 .hero__content--show-text .content__desc {
   transform: translateY(0px);
   transition: transform 300ms;
@@ -127,6 +105,7 @@ body {
   transition: none;
 }
 
+/* Стили слайдера */
 .hero__swiper {
   position: absolute;
   width: 70%;
@@ -138,43 +117,31 @@ body {
   user-select: none;
 }
 
-@media (max-width: 768px) {
-  .hero .hero__swiper {
-    width: 100%;
-    bottom: 20px;
-  }
-  
-  .content--slide .content__title {
-    display: none;
-  }
-  
-  .content--slide .content__desc {
-    display: none;
-  }
-  
-  .swiper-button-next {
-    display: none;
-  }
-}
-
-.swiper {
+/* Стили для основного слайдера (hero) */
+.hero-swiper {
   --swiper-navigation-size: 20px;
   visibility: hidden;
 }
 
-.swiper.swiper-initialized {
+.hero-swiper.swiper-initialized {
   visibility: visible;
 }
 
-.swiper-slide-prev,
-.swiper-slide-active {
+.hero-swiper .swiper-slide-prev,
+.hero-swiper .swiper-slide-active {
   opacity: 0;
 }
 
-.swiper-slide {
+.hero-swiper .swiper-slide {
   display: flex;
 }
 
+/* Показываем текст только на активном слайде в полноэкранном режиме */
+.hero__content:not(.hero__content--hidden) .content__text {
+  display: flex;
+}
+
+/* Стили контента слайдов */
 .content {
   display: flex;
   position: relative;
@@ -186,7 +153,7 @@ body {
 
 .content--slide {
   position: relative;
-  border-radius: var(--border-radius, 0);
+  border-radius: 12px;
 }
 
 .content__text {
@@ -197,26 +164,33 @@ body {
 }
 
 /* Скрываем текст на всех слайдах в карусели */
-.swiper-slide .content__text {
+.hero-swiper .swiper-slide .content__text {
   display: none;
 }
 
-/* Показываем текст только на активном слайде в полноэкранном режиме */
-.hero__content:not(.hero__content--hidden) .content__text {
-  display: flex;
+/* Стили для изображений в слайдах */
+.content__image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--border-radius, 0);
+  z-index: -2;
 }
 
-/* Стили для элемента с номером дня */
+/* Стили для номера дня */
 .day-number {
   position: absolute;
-  top: 10px;
-  left: 10px;
+  top: 0px;
+  left: 0px;
   background-color: rgba(0, 0, 0, 0.3);
-  color: rgb(235, 235, 235);
-  padding: 5px 10px;
-  border-radius: 8px;
+  color: white;
+  padding: 10px 10px;
+  border-radius: 0 12px 12px 0;
   font-weight: bold;
-  z-index: 2;
+  z-index: 1;
 }
 
 /* Скрываем номер дня на активном полноэкранном слайде */
@@ -248,11 +222,13 @@ body {
   position: absolute;
   border-radius: 0;
 }
+
 @media (max-width: 768px) {
   .content--hero {
     padding: 50px 30px 0;
   } 
 }
+
 .content--hero::before {
   content: '';
   position: absolute;
@@ -279,16 +255,6 @@ body {
   } 
 }
 
-.content__image {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: -2;
-}
-
 .swiper-button-next {
   right: auto !important;
   left: calc((100% - 25px * 2) / 3.5);
@@ -298,4 +264,29 @@ body {
   background-color: #fffb;
   border-radius: 50%;
   color: forestgreen;
+}
+
+/* Адаптивные стили */
+@media (max-width: 768px) {
+  .hero .hero__swiper {
+    width: 100%;
+    bottom: 20px;
+  }
+  
+  .content--slide .content__title {
+    display: none;
+  }
+  
+  .content--slide .content__desc {
+    display: none;
+  }
+  
+  .hero-swiper .swiper-button-next {
+    display: none;
+  }
+}
+
+/* Показываем текст только на активном слайде в полноэкранном режиме */
+.hero__content:not(.hero__content--hidden) .content__text {
+  display: flex;
 }

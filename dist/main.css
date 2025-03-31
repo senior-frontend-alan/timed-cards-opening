@@ -1,0 +1,26 @@
+/* Базовые стили */
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  position: relative;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: #f9f9f9;
+  background: #eef2fa;
+  font-family: sans-serif;
+  line-height: 1.35;
+  font-size: 18px;
+}
+
+@media (max-width: 768px) {
+  body {
+    font-size: 16px;
+  }
+}

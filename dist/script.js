@@ -122,34 +122,245 @@ function swiperInit(swiper) {
   state.topContent = content;
 }
 
-// Инициализация Swiper
-const swiper = new Swiper(".swiper", {
-  // Основные настройки
-  slidesPerView: 3.5,  // Количество видимых слайдов
-  spaceBetween: 25,    // Расстояние между слайдами
-  loop: true,          // Циклический режим
-  speed: 2000,         // Скорость анимации
-  simulateTouch: true, // Включение сенсорного управления
-  grabCursor: true,    // Курсор захвата при наведении
-  slideToClickedSlide: true,  // Переход к слайду при клике
-
-  // Автоматическая прокрутка
-  autoplay: {
-    delay: 3000, // Увеличенная задержка между слайдами в мс
-    disableOnInteraction: false // Продолжать автопрокрутку после взаимодействия пользователя
-  },
-
-  // Навигация
-  navigation: {
-    nextEl: ".swiper-button-next", // Кнопка "Следующий"
-    prevEl: ".swiper-button-prev"  // Кнопка "Предыдущий"
-  },
+// Инициализация Swiper для фотографий гостевого дома и номеров
+document.addEventListener('DOMContentLoaded', function() {
+  // Инициализация слайдера Swiper для размещения
+  const accommodationSwiper = new Swiper('.accommodation-swiper', {
+    slidesPerView: 1,
+    spaceBetween: 20,
+    grabCursor: true,
+    loop: true,
+    speed: 800,
+    
+    // Добавляем возможность зума
+    zoom: {
+      maxRatio: 3,
+      minRatio: 1,
+      toggle: true,
+    },
+    
+    // Навигация
+    navigation: {
+      nextEl: '.accommodation-button-next',
+      prevEl: '.accommodation-button-prev',
+    },
+    
+    // Пагинация
+    pagination: {
+      el: '.accommodation-pagination',
+      clickable: true,
+    },
+    
+    // Адаптивные настройки
+    breakpoints: {
+      640: {
+        slidesPerView: 1.5,
+        spaceBetween: 20,
+      },
+      768: {
+        slidesPerView: 2,
+        spaceBetween: 30,
+      },
+      1024: {
+        slidesPerView: 3,
+        spaceBetween: 30,
+      },
+    },
+  });
   
-  // Обработчики событий
-  on: { 
-    realIndexChange: slideChange, // При изменении слайда
-    init: swiperInit            // При инициализации
+  // Получаем ссылки на модальное окно и его элементы
+  const modal = document.querySelector('.accommodation-modal');
+  const modalImg = document.querySelector('.accommodation-modal-image');
+  const closeBtn = document.querySelector('.accommodation-modal-close');
+  const prevBtn = document.querySelector('.modal-prev-btn');
+  const nextBtn = document.querySelector('.modal-next-btn');
+  const counter = document.querySelector('.modal-counter');
+  const slides = document.querySelectorAll('.accommodation-slide img');
+  const roomImages = document.querySelectorAll('.room-image');
+  
+  // Переменная для хранения текущего индекса изображения
+  let currentImageIndex = 0;
+  
+  // Функция обновления счетчика изображений
+  function updateCounter() {
+    const totalImages = slides.length + roomImages.length;
+    counter.textContent = `${currentImageIndex + 1} / ${totalImages}`;
   }
+  
+  // Добавляем обработчики событий для каждого изображения гостевого дома
+  slides.forEach((img, index) => {
+    img.addEventListener('click', function() {
+      modal.style.display = 'block';
+      modalImg.src = this.src;
+      currentImageIndex = index;
+      updateCounter();
+      
+      // Синхронизируем Swiper с текущим изображением
+      accommodationSwiper.slideTo(index);
+      
+      // Останавливаем автоматическую прокрутку слайдера
+      if (accommodationSwiper.autoplay && accommodationSwiper.autoplay.running) {
+        accommodationSwiper.autoplay.stop();
+      }
+    });
+  });
+  
+  // Добавляем обработчики событий для изображений номеров
+  let allImages = [...slides, ...roomImages];
+  
+  roomImages.forEach((img, index) => {
+    img.addEventListener('click', function() {
+      modal.style.display = 'block';
+      modalImg.src = this.src;
+      // Для изображений номеров смещаем индекс на количество изображений дома
+      currentImageIndex = slides.length + index;
+      updateCounter();
+      
+      // Останавливаем автоматическую прокрутку слайдера, если он запущен
+      if (accommodationSwiper.autoplay && accommodationSwiper.autoplay.running) {
+        accommodationSwiper.autoplay.stop();
+      }
+    });
+  });
+  
+  function showPrevImage() {
+    const totalImages = slides.length + roomImages.length;
+    currentImageIndex = (currentImageIndex - 1 + totalImages) % totalImages;
+    
+    if (currentImageIndex < slides.length) {
+      // Если это изображение дома
+      modalImg.src = slides[currentImageIndex].src;
+      // Синхронизируем Swiper с текущим изображением
+      accommodationSwiper.slideTo(currentImageIndex);
+    } else {
+      // Если это изображение номера
+      const roomIndex = currentImageIndex - slides.length;
+      modalImg.src = roomImages[roomIndex].src;
+    }
+    
+    updateCounter();
+  }
+  
+  function showNextImage() {
+    const totalImages = slides.length + roomImages.length;
+    currentImageIndex = (currentImageIndex + 1) % totalImages;
+    
+    if (currentImageIndex < slides.length) {
+      // Если это изображение дома
+      modalImg.src = slides[currentImageIndex].src;
+      // Синхронизируем Swiper с текущим изображением
+      accommodationSwiper.slideTo(currentImageIndex);
+    } else {
+      // Если это изображение номера
+      const roomIndex = currentImageIndex - slides.length;
+      modalImg.src = roomImages[roomIndex].src;
+    }
+    
+    updateCounter();
+  }
+  
+  // Обработчики кликов по кнопкам навигации
+  prevBtn.addEventListener('click', showPrevImage);
+  nextBtn.addEventListener('click', showNextImage);
+  
+  // Закрытие модального окна при клике на крестик
+  closeBtn.addEventListener('click', function() {
+    modal.style.display = 'none';
+    
+    // Возобновляем автоматическую прокрутку слайдера
+    if (accommodationSwiper.autoplay && !accommodationSwiper.autoplay.running) {
+      accommodationSwiper.autoplay.start();
+    }
+  });
+  
+  // Закрытие модального окна при клике вне изображения
+  modal.addEventListener('click', function(event) {
+    if (event.target === modal) {
+      modal.style.display = 'none';
+      
+      // Возобновляем автоматическую прокрутку слайдера
+      if (accommodationSwiper.autoplay && !accommodationSwiper.autoplay.running) {
+        accommodationSwiper.autoplay.start();
+      }
+    }
+  });
+  
+  // Добавляем обработчик клавиш для навигации и закрытия
+  document.addEventListener('keydown', function(event) {
+    if (modal.style.display === 'block') {
+      if (event.key === 'Escape') {
+        // Закрытие модального окна по Escape
+        modal.style.display = 'none';
+        
+        // Возобновляем автоматическую прокрутку слайдера
+        if (accommodationSwiper.autoplay && !accommodationSwiper.autoplay.running) {
+          accommodationSwiper.autoplay.start();
+        }
+      } else if (event.key === 'ArrowLeft') {
+        // Переключение на предыдущее изображение по стрелке влево
+        showPrevImage();
+      } else if (event.key === 'ArrowRight') {
+        // Переключение на следующее изображение по стрелке вправо
+        showNextImage();
+      }
+    }
+  });
+  
+  // Добавляем обработчик свайпа для мобильных устройств
+  let touchStartX = 0;
+  let touchEndX = 0;
+  
+  modalImg.addEventListener('touchstart', function(e) {
+    touchStartX = e.changedTouches[0].screenX;
+  }, false);
+  
+  modalImg.addEventListener('touchend', function(e) {
+    touchEndX = e.changedTouches[0].screenX;
+    handleSwipe();
+  }, false);
+  
+  function handleSwipe() {
+    if (touchEndX < touchStartX) {
+      // Свайп влево - следующее изображение
+      showNextImage();
+    } else if (touchEndX > touchStartX) {
+      // Свайп вправо - предыдущее изображение
+      showPrevImage();
+    }
+  }
+});
+
+// Инициализация основного Swiper (герой)
+document.addEventListener('DOMContentLoaded', function() {
+  // Инициализируем основной слайдер с уникальным классом
+  const heroSwiper = new Swiper(".hero-swiper", {
+    // Основные настройки
+    slidesPerView: 3.5,  // Количество видимых слайдов
+    spaceBetween: 25,    // Расстояние между слайдами
+    loop: true,          // Циклический режим
+    speed: 2000,         // Скорость анимации
+    simulateTouch: true, // Включение сенсорного управления
+    grabCursor: true,    // Курсор захвата при наведении
+    slideToClickedSlide: true,  // Переход к слайду при клике
+
+    // Автоматическая прокрутка
+    autoplay: {
+      delay: 3000, // Увеличенная задержка между слайдами в мс
+      disableOnInteraction: false // Продолжать автопрокрутку после взаимодействия пользователя
+    },
+
+    // Навигация
+    navigation: {
+      nextEl: ".hero-swiper .swiper-button-next", // Кнопка "Следующий"
+      prevEl: ".hero-swiper .swiper-button-prev"  // Кнопка "Предыдущий"
+    },
+    
+    // Обработчики событий
+    on: { 
+      realIndexChange: slideChange, // При изменении слайда
+      init: swiperInit            // При инициализации
+    }
+  });
 });
 
 // Примечание: используем встроенный параметр slideToClickedSlide для обработки кликов

@@ -1,0 +1,92 @@
+/* Стили для компонента с подробным описанием дня */
+.day-details-container {
+  display: flex;
+  flex-direction: row;
+  max-width: 1200px;
+  margin: 50px auto;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.day-gallery {
+  flex: 1;
+  padding: 20px;
+  background-color: #f8f8f8;
+}
+
+.gallery-title {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  color: #333;
+  font-weight: bold;
+  text-align: center;
+}
+
+.gallery-images {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 15px;
+}
+
+.gallery-img {
+  width: 100%;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.gallery-img:hover {
+  transform: scale(1.02);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.day-description {
+  flex: 1.5;
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-bottom: 30px;
+  background-color: white;
+}
+
+.day-title {
+  margin-bottom: 20px;
+  color: #333;
+  border-bottom: 2px solid #f0f0f0;
+  padding-bottom: 15px;
+}
+
+.day-text {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 15px;
+  color: #444;
+}
+
+/* Адаптивные стили */
+@media (max-width: 900px) {
+  .day-details-container {
+    flex-direction: column;
+    margin: 30px 15px;
+  }
+  
+  .gallery-images {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .gallery-images {
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 10px;
+  }
+  
+  .day-title {
+    font-size: 1.5rem;
+  }
+  
+  .day-text {
+    font-size: 1rem;
+  }
+}

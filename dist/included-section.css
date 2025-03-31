@@ -1,0 +1,144 @@
+/* Стили для блока "Включено в стоимость" */
+.included-section {
+  max-width: 1000px;
+  margin: 50px auto;
+  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+  position: relative;
+  overflow: hidden;
+}
+
+.included-section::before,
+.included-section::after {
+  content: "";
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  opacity: 0.15;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.included-section::before {
+  top: 0;
+  left: 0;
+  background-image: url('images/svg/tribal2.svg');
+}
+
+.included-section::after {
+  bottom: 0;
+  right: 0;
+  background-image: url('images/svg/tribal5.svg');
+}
+
+.section-title {
+  text-align: center;
+  font-size: 2.2rem;
+  margin-bottom: 30px;
+  color: #333;
+  position: relative;
+  z-index: 1;
+}
+
+.section-title::after {
+  content: "";
+  display: block;
+  width: 80px;
+  height: 3px;
+  background: #4a90e2;
+  margin: 15px auto 0;
+  border-radius: 2px;
+}
+
+.included-block,
+.not-included-block {
+  margin-bottom: 30px;
+  position: relative;
+  z-index: 1;
+}
+
+.included-block h3,
+.not-included-block h3 {
+  font-size: 1.6rem;
+  margin-bottom: 20px;
+  color: #333;
+  border-left: 4px solid #4a90e2;
+  padding-left: 15px;
+}
+
+.included-list,
+.not-included-list {
+  list-style: none;
+  padding: 0;
+}
+
+.included-list li,
+.not-included-list li {
+  margin-bottom: 15px;
+  padding-left: 35px;
+  position: relative;
+  line-height: 1.5;
+}
+
+.check-icon,
+.cross-icon {
+  position: absolute;
+  left: 0;
+  top: 2px;
+  font-size: 1.2rem;
+  width: 25px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.check-icon {
+  color: #4CAF50;
+  background-color: rgba(76, 175, 80, 0.1);
+}
+
+.cross-icon {
+  color: #F44336;
+  background-color: rgba(244, 67, 54, 0.1);
+}
+
+/* Медиа-запросы для адаптивности */
+@media (max-width: 768px) {
+  .included-section {
+    padding: 20px;
+    margin: 30px 15px;
+  }
+  
+  .section-title {
+    font-size: 1.8rem;
+  }
+  
+  .included-block h3,
+  .not-included-block h3 {
+    font-size: 1.4rem;
+  }
+  
+  .included-list li,
+  .not-included-list li {
+    font-size: 0.95rem;
+  }
+}
+
+/* Анимация при наведении */
+.included-list li:hover,
+.not-included-list li:hover {
+  transform: translateX(5px);
+  transition: transform 0.3s ease;
+}
+
+.included-list li,
+.not-included-list li {
+  transition: transform 0.3s ease;
+}

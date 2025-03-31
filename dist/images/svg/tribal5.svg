@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200px" height="200px" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <g fill="rgba(74, 144, 226, 0.15)" stroke="none">
+    <path d="M200,200 L150,200 L175,175 Z"/>
+    <path d="M200,200 L200,150 L175,175 Z"/>
+    <path d="M200,140 L200,100 L160,140 Z"/>
+    <path d="M140,200 L100,200 L140,160 Z"/>
+    <circle cx="175" cy="160" r="8"/>
+    <circle cx="155" cy="160" r="5"/>
+    <circle cx="135" cy="160" r="3"/>
+    <path d="M170,130 L150,150 L170,170 L190,150 Z"/>
+  </g>
+</svg>

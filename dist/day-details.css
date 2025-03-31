@@ -8,12 +8,71 @@
   border-radius: 15px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   overflow: hidden;
+  position: relative;
+}
+
+/* Индейские рисунки в углах */
+.day-details-container::before,
+.day-details-container::after {
+  content: "";
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  opacity: 0.8;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.5s ease;
+}
+
+.day-details-container:hover::before,
+.day-details-container:hover::after,
+.day-details-container:hover .tribal-bottom-left,
+.day-details-container:hover .tribal-bottom-right {
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+.day-details-container::before {
+  top: 0;
+  left: 0;
+  background-image: url('images/svg/tribal2.svg');
+}
+
+.day-details-container::after {
+  top: 0;
+  right: 0;
+  background-image: url('images/svg/tribal3.svg');
+}
+
+.day-details-container .tribal-bottom-left,
+.day-details-container .tribal-bottom-right {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  opacity: 0.8;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+  bottom: 0;
+  transition: opacity 0.3s ease, transform 0.5s ease;
+}
+
+.day-details-container .tribal-bottom-left {
+  left: 0;
+  background-image: url('images/svg/tribal4.svg');
+}
+
+.day-details-container .tribal-bottom-right {
+  right: 0;
+  background-image: url('images/svg/tribal5.svg');
 }
 
 .day-gallery {
   flex: 1;
   padding: 20px;
-  background-color: #f8f8f8;
 }
 
 .gallery-title {
@@ -64,6 +123,69 @@
   color: #444;
 }
 
+/* Стили для анимированных иконок */
+.journey-divider {
+  text-align: center;
+  margin: 20px 0;
+  position: relative;
+}
+
+.journey-icon {
+  font-size: 2.5rem;
+  color: #4a90e2;
+  display: inline-block;
+  animation: float 3s ease-in-out infinite;
+  margin: 0 15px;
+  text-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.journey-icons-container {
+  background: #eef2fa;
+  padding: 10px 15px;
+  border-radius: 50px;
+  display: inline-block;
+}
+
+.journey-line {
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(74, 144, 226, 0.5), transparent);
+  width: 80%;
+  margin: 0 auto;
+  position: relative;
+  top: -25px;
+  z-index: -1;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.spin {
+  animation: spin 8s linear infinite;
+}
+
+.journey-divider:hover .journey-icon {
+  animation-duration: 1.5s;
+  color: #ff6b6b;
+}
+
 /* Адаптивные стили */
 @media (max-width: 900px) {
   .day-details-container {
@@ -73,6 +195,11 @@
   
   .gallery-images {
     grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .journey-icon {
+    font-size: 2rem;
+    margin: 0 10px;
   }
 }
 
@@ -88,5 +215,10 @@
   
   .day-text {
     font-size: 1rem;
+  }
+  
+  .journey-icon {
+    font-size: 1.8rem;
+    margin: 0 8px;
   }
 }

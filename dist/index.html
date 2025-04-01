@@ -20,10 +20,11 @@
 <header class="site-header">
   <h2 class="site-title">"Дзен Тур" Перезагрузка в Крыму</h2>
   <div class="contact-info">
-    <span>  Бронируй <i class="telegram-icon"></i> @genadzen </span>
-    <span><i class="phone-icon"></i> +7 913 153 5314</span>
+    <span>  Бронируй <a href="https://t.me/genadzen" class="header-contact-link"><i class="telegram-icon"></i> @genadzen</a> </span>
+    <span><a href="tel:+79131535314" class="header-contact-link"><i class="phone-icon"></i> +7 913 153 5314</a></span>
   </div>
 </header>
+
 <div class="hero">
   <div class="hero__fullsize"></div>
   <div class="hero__swiper swiper hero-swiper">
@@ -584,8 +585,47 @@
   </div>
 </div>
 
+<!-- Блок "Бронируй тур" -->
+<div class="booking-section">
+  <h2 class="section-title">Бронируй тур</h2>
+  <p class="booking-info">Для бронирования тура напишите нам или позвоните</p>
+  <p class="booking-info">
+    <a href="https://t.me/genadzen" class="contact-link"><span class="contact-item"><i class="telegram-icon"></i> @genadzen</span></a> <br/> <a href="tel:+79131535314" class="contact-link"><span class="contact-item"><i class="phone-icon"></i> +7 913 153 5314</span></a>
+  </p>
+</div>
+
 <!-- Добавляем скрипт для основного слайдера -->
 <script type="module" src="./script.js"></script>
+
+<!-- Скрипт для управления шапкой на мобильных устройствах -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const isMobile = window.innerWidth <= 768;
+    
+    if (isMobile) {
+      const header = document.querySelector('.site-header');
+      
+      if (header) {
+        header.classList.remove('hidden');
+        
+        function checkScroll() {
+          const scrollPosition = window.scrollY;
+          
+          // Если прокрутили больше 1000px
+          if (scrollPosition > 1000) {
+            header.classList.add('hidden');
+          } else {
+            header.classList.remove('hidden');
+          }
+        }
+        
+        window.addEventListener('scroll', checkScroll);
+        
+        checkScroll();
+      }
+    }
+  });
+</script>
 
 <!-- Добавляем скрипт Яндекс.Карт -->
 <script src="https://api-maps.yandex.ru/2.1/?apikey=ваш_API_ключ&lang=ru_RU" type="text/javascript"></script>
@@ -616,5 +656,11 @@
     }
   });
 </script>
+
+<!-- Футер -->
+<footer class="site-footer">
+  <p>Сайт разработан <a href="https://t.me/native_alan" class="footer-link"><i class="telegram-icon"></i> @native_alan</a>&nbsp;&nbsp;&nbsp;&nbsp;2025г.</p>
+</footer>
+
 </body>
 </html>

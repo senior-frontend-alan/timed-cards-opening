@@ -1,0 +1,12 @@
+@font-face {
+	font-family: 'Ethna';
+	src: url('./fonts/ethna.eot'); /* IE 9 Compatibility Mode */
+	src: url('./fonts/ethna.eot?#iefix') format('embedded-opentype'), /* IE < 9 */
+		url('./fonts/ethna.woff2') format('woff2'), /* Super Modern Browsers */
+		url('./fonts/ethna.woff') format('woff'), /* Firefox >= 3.6, any other modern browser */
+		url('./fonts/ethna.ttf') format('truetype'), /* Safari, Android, iOS */
+		url('./fonts/ethna.svg#ethna') format('svg'); /* Chrome < 4, Legacy iOS */
+	font-display: swap;
+	font-weight: normal;
+	font-style: normal;
+}

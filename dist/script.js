@@ -44,11 +44,13 @@ function slideChange(swiper) {
   // Управление предыдущими слайдами
   if (state.bottomContent) {
     state.bottomContent.classList.remove("hero__content--bottom");
+    state.bottomContent.classList.remove("hero__content--show-text"); // Удаляем класс показа текста
     state.bottomContent.classList.add("hero__content--hidden");
   }
 
   if (state.topContent) {
     state.topContent.classList.remove("hero__content--top");
+    state.topContent.classList.remove("hero__content--show-text"); // Удаляем класс показа текста
     state.topContent.classList.add("hero__content--bottom");
   }
 
@@ -73,7 +75,8 @@ function slideChange(swiper) {
 
   // Активация и подготовка к анимации
   content.classList.remove("hero__content--hidden");
-  content.classList.add("hero__content--top", "hero__content--grow");
+  content.classList.remove("hero__content--show-text"); // Удаляем класс показа текста, если он был добавлен ранее
+  content.classList.add("hero__content--top");
 
   // Сброс стилей для анимации в полный размер
   content.style.transition = "";
@@ -83,25 +86,14 @@ function slideChange(swiper) {
   content.style.height = "";
   content.style.borderRadius = "";
 
-  // Обработчики анимации
+  // Упрощенная анимация текста - используем таймер вместо события transitionend
   
-  // Обработчик завершения анимации показа текста
-  const onShowTextEnd = (event) => {
-    if (event.target !== event.currentTarget) {
-      event.currentTarget.classList.remove("hero__content--show-text");
-      event.currentTarget.removeEventListener("transitionend", onShowTextEnd);
-    }
-  };
-
-  // Обработчик завершения анимации увеличения
-  const onGrowEnd = (event) => {
-    event.currentTarget.classList.remove("hero__content--grow");
-    event.currentTarget.classList.add("hero__content--show-text");
-    event.currentTarget.addEventListener("transitionend", onShowTextEnd);
-  };
-
-  // Добавление обработчика для отслеживания завершения анимации
-  content.addEventListener("transitionend", onGrowEnd, { once: true });
+  // Используем таймер для показа текста после завершения анимации увеличения
+  // Длительность анимации увеличения указана в CSS как --transition-duration: 1000ms
+  setTimeout(() => {
+    // Добавляем класс для показа текста
+    content.classList.add("hero__content--show-text");
+  }, 1100); // Задержка 1100мс (время анимации + небольшой запас)
 }
 
 /**
@@ -120,6 +112,11 @@ function swiperInit(swiper) {
   content.classList.remove("hero__content--hidden");
   content.classList.add("hero__content--top");
   state.topContent = content;
+  
+  // Добавляем показ текста для первого слайда с задержкой
+  setTimeout(() => {
+    content.classList.add("hero__content--show-text");
+  }, 500);
 }
 
 // Инициализация Swiper для фотографий гостевого дома и номеров
@@ -177,13 +174,14 @@ document.addEventListener('DOMContentLoaded', function() {
   const counter = document.querySelector('.modal-counter');
   const slides = document.querySelectorAll('.accommodation-slide img');
   const roomImages = document.querySelectorAll('.room-image');
+  const dayImages = document.querySelectorAll('.gallery-img');
   
   // Переменная для хранения текущего индекса изображения
   let currentImageIndex = 0;
   
   // Функция обновления счетчика изображений
   function updateCounter() {
-    const totalImages = slides.length + roomImages.length;
+    const totalImages = allImages.length;
     counter.textContent = `${currentImageIndex + 1} / ${totalImages}`;
   }
   
@@ -205,9 +203,10 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
   
-  // Добавляем обработчики событий для изображений номеров
-  let allImages = [...slides, ...roomImages];
+  // Создаем массив всех изображений, которые могут быть открыты в модальном окне
+  let allImages = [...slides, ...roomImages, ...dayImages];
   
+  // Добавляем обработчики событий для изображений номеров
   roomImages.forEach((img, index) => {
     img.addEventListener('click', function() {
       modal.style.display = 'block';
@@ -223,8 +222,24 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
   
+  // Добавляем обработчики событий для изображений дней
+  dayImages.forEach((img, index) => {
+    img.addEventListener('click', function() {
+      modal.style.display = 'block';
+      modalImg.src = this.src;
+      // Для изображений дней смещаем индекс на количество изображений дома и номеров
+      currentImageIndex = slides.length + roomImages.length + index;
+      updateCounter();
+      
+      // Останавливаем автоматическую прокрутку слайдера, если он запущен
+      if (accommodationSwiper.autoplay && accommodationSwiper.autoplay.running) {
+        accommodationSwiper.autoplay.stop();
+      }
+    });
+  });
+  
   function showPrevImage() {
-    const totalImages = slides.length + roomImages.length;
+    const totalImages = allImages.length;
     currentImageIndex = (currentImageIndex - 1 + totalImages) % totalImages;
     
     if (currentImageIndex < slides.length) {
@@ -232,17 +247,21 @@ document.addEventListener('DOMContentLoaded', function() {
       modalImg.src = slides[currentImageIndex].src;
       // Синхронизируем Swiper с текущим изображением
       accommodationSwiper.slideTo(currentImageIndex);
-    } else {
+    } else if (currentImageIndex < slides.length + roomImages.length) {
       // Если это изображение номера
       const roomIndex = currentImageIndex - slides.length;
       modalImg.src = roomImages[roomIndex].src;
+    } else {
+      // Если это изображение дня
+      const dayIndex = currentImageIndex - slides.length - roomImages.length;
+      modalImg.src = dayImages[dayIndex].src;
     }
     
     updateCounter();
   }
   
   function showNextImage() {
-    const totalImages = slides.length + roomImages.length;
+    const totalImages = allImages.length;
     currentImageIndex = (currentImageIndex + 1) % totalImages;
     
     if (currentImageIndex < slides.length) {
@@ -250,10 +269,14 @@ document.addEventListener('DOMContentLoaded', function() {
       modalImg.src = slides[currentImageIndex].src;
       // Синхронизируем Swiper с текущим изображением
       accommodationSwiper.slideTo(currentImageIndex);
-    } else {
+    } else if (currentImageIndex < slides.length + roomImages.length) {
       // Если это изображение номера
       const roomIndex = currentImageIndex - slides.length;
       modalImg.src = roomImages[roomIndex].src;
+    } else {
+      // Если это изображение дня
+      const dayIndex = currentImageIndex - slides.length - roomImages.length;
+      modalImg.src = dayImages[dayIndex].src;
     }
     
     updateCounter();
@@ -332,6 +355,44 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Инициализация основного Swiper (герой)
 document.addEventListener('DOMContentLoaded', function() {
+  // Добавляем обработчики для кнопок "Смотреть"
+  const viewDayButtons = document.querySelectorAll('.view-day-btn');
+  
+  viewDayButtons.forEach(button => {
+    button.addEventListener('click', function(e) {
+      e.stopPropagation(); // Предотвращаем всплытие события
+      
+      const dayNumber = this.getAttribute('data-day');
+      const daySection = document.getElementById(`day${dayNumber}`);
+      
+      if (daySection) {
+        // Плавный скролл к соответствующему дню
+        daySection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        console.log(`Скролл к дню ${dayNumber}`);
+      } else {
+        console.log(`Секция дня ${dayNumber} не найдена`);
+      }
+    });
+  });
+  
+  // Добавляем обработчик для стрелки прокрутки вниз
+  const heroElement = document.querySelector('.hero');
+  if (heroElement) {
+    heroElement.addEventListener('click', function(e) {
+      // Проверяем, что клик был по псевдоэлементу стрелки
+      const rect = heroElement.getBoundingClientRect();
+      const bottomArea = rect.bottom - 100; // Область внизу героя, где находится стрелка
+      
+      if (e.clientY > bottomArea) {
+        // Скролл к первому разделу после героя
+        const nextSection = document.querySelector('.journey-divider') || 
+                           document.querySelector('.day-details');
+        if (nextSection) {
+          nextSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
+    });
+  }
   // Инициализируем основной слайдер с уникальным классом
   const heroSwiper = new Swiper(".hero-swiper", {
     // Основные настройки

@@ -3,6 +3,11 @@
   box-sizing: border-box;
 }
 
+/* Устанавливаем тонкий шрифт для всех заголовков */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 300;
+}
+
 html,
 body {
   position: relative;
@@ -14,9 +19,94 @@ body {
 body {
   background: #f9f9f9;
   background: #eef2fa;
-  font-family: sans-serif;
   line-height: 1.35;
   font-size: 18px;
+  font-weight: 300;
+}
+
+/* Стили для хедера */
+.site-header {
+  background-color: rgba(16, 37, 56, 0.44);
+  padding: 10px 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  width: 100%;
+  z-index: 1000;
+  top: 0;
+}
+
+.site-title {
+  color: white;
+  margin: 0;
+  font-family: 'Ethna', sans-serif;
+  font-size: 24px;
+  font-weight: 300;
+  letter-spacing: 1.5px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Стили для контактной информации */
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  background-color: rgba(0, 0, 0, 0.4);
+  padding: 10px 15px;
+  border-radius: 20px;
+  line-height: 1.5;
+}
+
+.contact-info span {
+  display: block;
+  white-space: nowrap;
+}
+
+/* Стили для иконки Telegram */
+.telegram-icon {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2329b6f6'%3E%3Cpath d='M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z'/%3E%3C/svg%3E");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin: 0 5px;
+  vertical-align: middle;
+}
+
+/* Стили для иконки телефона */
+.phone-icon {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%234CAF50'%3E%3Cpath d='M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z'/%3E%3C/svg%3E");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin: 0 5px;
+  vertical-align: middle;
+}
+
+/* Адаптивные стили для мобильных устройств */
+@media (max-width: 768px) {
+  .site-header {
+    flex-direction: column;
+    padding: 10px;
+  }
+  
+  .site-title {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  
+  .contact-info {
+    align-items: center;
+  }
 }
 
 @media (max-width: 768px) {

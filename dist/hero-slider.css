@@ -10,7 +10,24 @@
   --transition-duration: 1000ms;
   position: relative;
   width: 100%;
-  height: 100vh;
+  height: 99vh;
+}
+
+
+
+/* Анимация для стрелки */
+@keyframes scrollArrow {
+  0% {
+    transform: translateY(-10px) rotate(45deg);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(10px) rotate(45deg);
+    opacity: 0;
+  }
 }
 
 .hero__fullsize {
@@ -50,65 +67,115 @@
   z-index: 2;
 }
 
-/* Эффект шторки */
-.hero__content--show-text::before {
-  transform: translateX(0);
-  transition: transform 300ms;
+/* Анимация текста - упрощенная версия */
+
+/* Скрываем текст по умолчанию в полноэкранном режиме */
+.hero__content .content__title,
+.hero__content .content__desc,
+.hero__content .button-container {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 400ms ease, transform 400ms ease;
 }
 
-.hero__content--grow::before {
-  transform: translateX(-100%);
-  transition: none;
-}
-
-/* title */
-.hero__content--show-text .content__title {
+/* Показываем текст и кнопку с анимацией появления снизу вверх */
+.hero__content--show-text .content__title,
+.hero__content--show-text .content__desc,
+.hero__content--show-text .button-container {
+  opacity: 1;
   transform: translateY(0);
-  transition: transform 300ms;
 }
 
-.hero__content--show-text .content__title .word {
-  clip-path: inset(0);
-  transition: clip-path 300ms;
-}
-
-.hero__content--grow .content__title {
-  visibility: hidden;
-  transform: translateY(48px);
-  transition: none;
-}
-
-.hero__content--grow .content__title .word {
-  clip-path: inset(0 0 48px);
-  transition: none;
-}
-
-/* desc */
+/* Добавляем задержку для описания и кнопки, чтобы они появлялись последовательно */
 .hero__content--show-text .content__desc {
-  transform: translateY(0px);
-  transition: transform 300ms;
+  transition-delay: 100ms;
 }
 
-.hero__content--show-text .content__desc .word {
-  clip-path: inset(0);
-  transition: clip-path 300ms;
+.hero__content--show-text .button-container {
+  transition-delay: 200ms;
 }
 
-.hero__content--grow .content__desc {
-  visibility: hidden;
-  transform: translateY(18px);
-  transition: none;
+/* Стили для кнопки Смотреть */
+.view-day-btn {
+  /* Основные стили кнопки */
+  position: relative;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 20px;
+  padding-right: 20px;
+  background-color: transparent;
+  border: 2px solid #fff;
+  color: #fff;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.5));
+  overflow: hidden;
+  animation: pulseButton 2s infinite;
+  display: inline-block;
+  width: auto;
 }
 
-.hero__content--grow .content__desc .word {
-  clip-path: inset(0 0 18px);
-  transition: none;
+/* Стили при наведении и нажатии */
+.view-day-btn:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.view-day-btn:active {
+  transform: translateY(1px);
+}
+
+/* Анимация для кнопки */
+@keyframes pulseButton {
+  0% {
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.7;
+  }
+}
+
+/* Стили для контейнера кнопки и стрелки */
+.button-container {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 30px;
+  width: auto;
+  align-self: flex-start;
+}
+
+/* Стили для стрелки */
+.scroll-arrow {
+  width: 15px;
+  height: 15px;
+  border-right: 3px solid #fff;
+  border-bottom: 3px solid #fff;
+  transform: rotate(45deg);
+  margin-top: 15px;
+  animation: scrollArrow 2s infinite;
+  cursor: pointer;
+  filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.5));
+  opacity: 0;
+  transition: opacity 400ms ease;
+}
+
+/* Показываем стрелку только когда показывается текст */
+.hero__content--show-text .scroll-arrow {
+  opacity: 1;
 }
 
 /* Стили слайдера */
 .hero__swiper {
   position: absolute;
   width: 70%;
+  max-height: 38vh;
   aspect-ratio: 2.5 / 1;
   right: 0px;
   bottom: 50px;
@@ -161,6 +228,18 @@
   flex-direction: column;
   width: 100%;
   color: #fff;
+  position: absolute;
+  top: 20%;
+  left: calc(50% - 500px); /* Не далее 500px влево от середины */
+  max-width: 600px; /* Ограничение максимальной ширины */
+}
+
+/* Адаптивность для маленьких экранов */
+@media (max-width: 1200px) {
+  .content__text {
+    left: 0;
+    padding-left: 20px;
+  }
 }
 
 /* Скрываем текст на всех слайдах в карусели */
@@ -189,7 +268,7 @@
   color: white;
   padding: 10px 10px;
   border-radius: 0 12px 12px 0;
-  font-weight: bold;
+  font-weight: 400;
   z-index: 1;
 }
 
@@ -202,6 +281,8 @@
   margin: 0;
 }
 
+
+
 .content--slide .content__title {
   margin: auto 0 0;
   padding: 0.35em 0.75em;
@@ -209,6 +290,7 @@
   max-width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-weight: 300;
 }
 
 .content--slide .content__desc {
@@ -242,7 +324,7 @@
 }
 
 .content--hero .content__title {
-  margin: 0 0 0.2em;
+  margin: 0 0 0.8em;
 }
 
 .content--hero .content__text {

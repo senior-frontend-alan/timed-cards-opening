@@ -5,6 +5,9 @@ export default defineConfig({
   // Указываем корневую директорию для сервера и разработки
   root: 'dist',
   
+  // Базовый путь для GitHub Pages
+  base: '/timed-cards-opening/',
+  
   // Настройка сервера разработки
   server: {
     // Открывать браузер при запуске
